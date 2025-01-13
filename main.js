@@ -21,3 +21,23 @@ const firebaseConfig = {
   appId: "1:1047091827759:web:0f1742d6f3922f856de2da",
   measurementId: "G-GL8J5GC8XB"
 };
+
+// fungsi ambil daftar pelanggan 
+export async function ambilDaftarPelanggan() {
+  const refDokumen = collection(basisdata, "pelanggan");
+  const kueri = query(refDokumen, orderBy("nama"));
+  const cuplikankueri = await getDocs(kueri);
+
+  let hasilkueri = [];
+  cuplikankueri.forEach((dokumen) => {
+    hasilkueri.push({
+      id: dokumen.id,
+      nama: dokumen.data().nama,
+      alamat: dokumen.data().alamat,
+      nohape: dokumen.data().nohape
+      
+    })
+  })
+
+  return hasilkueri;
+}
